@@ -9,41 +9,6 @@ class ProductTagsSerializer(serializers.ModelSerializer):
         model = ProductTag
         fields = ["tags"]
 
-class ProductListSerializer(serializers.ModelSerializer):
-    producttags = ProductTagsSerializer(many=True)
-
-    class Meta:
-        model = Product
-        fields = [
-            "id",
-            "manager",
-            "price",
-            "sale_price",
-            "stock",
-            "producttags",
-        ]
-
-class ProductCreateSerializer(serializers.ModelSerializer):
-    producttags = ProductTagsSerializer(many=True)
-
-    class Meta:
-        model = Product
-        fields = [
-            "id",
-            "manager",
-            "price",
-            "sale_price",
-            "stock",
-            "producttags",
-        ]
-
-    def create(self, validated_data):
-        tag_data = validated_data.pop('producttags')
-        id = Product.objects.create(**validated_data)
-        for tag in tag_data:
-            ProductTag.objects.create(tagid=id, **tag)
-        return id
-
 class ProductSerializer(serializers.ModelSerializer):
     producttags = ProductTagsSerializer(many=True)
 
@@ -51,6 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             "id",
+            "name",
             "manager",
             "price",
             "sale_price",

@@ -1,3 +1,5 @@
 
 
 mainsite/products/migrations
+mainsite/db.sqlite3
+mainsite/product/__pycache__
