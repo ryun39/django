@@ -1,10 +1,5 @@
-from tabnanny import verbose
-from tkinter import CASCADE, messagebox
 from django.contrib.auth.models import User
 from django.db import models
-from django.forms import CharField
-
-
 
 class Product(models.Model):
     manager = models.ForeignKey(
@@ -26,6 +21,9 @@ class Product(models.Model):
     class Meta:
         verbose_name = "상품"
         verbose_name_plural="상품"
+
+    def __str__(self):
+        return self.name
 
 class ProductTag(models.Model):
     tagid = models.ForeignKey(
