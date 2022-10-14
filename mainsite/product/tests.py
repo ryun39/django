@@ -76,11 +76,81 @@ class ProductViewTestCase(TestCase):
 
         res = self.client.get("/product/")
 
-        self.assertEqual(len(res.json()), 15)
+        self.assertEqual(len(res.json()), 4)
 
         # 상품 sale_price 내림차순 조회
         self.client.force_login(self.product_A_manager)
 
         res = self.client.get("/product/?ordering=sale_price")
 
-        self.assertEqual(len(res.json()), 15)
+        self.assertEqual(len(res.json()), 4)
+
+
+    def test_product_filter_view(self):
+        """
+        상품 필터 API test
+        """
+
+        data = {
+            "name": "bal",
+            "manager": self.product_A_manager.id,
+            "sale_price": 10000,
+            "price": 12000,
+            "stock": False,
+            "producttags": [{"tags":"aaaa"}]
+        }
+        res = self.client.post("/product/", data=data, content_type="application/json")
+        res = self.client.get("/product/?name=bal")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?price=12000")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?sale_price=10000")
+        self.assertEqual(len(res.json()), 1)
+
+    def test_product_search_view(self):
+        """
+        상품 검색 API test
+        """
+
+        data = {
+            "name": "bal",
+            "manager": self.product_A_manager.id,
+            "sale_price": 10000,
+            "price": 12000,
+            "stock": False,
+            "producttags": [{"tags":"aaaa"}]
+        }
+        res = self.client.post("/product/", data=data, content_type="application/json")
+        res = self.client.get("/product/?search=bal")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?search=12000")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?search=10000")
+        self.assertEqual(len(res.json()), 1)
+
+    def test_product_search_view(self):
+        """
+        상품 검색 API test
+        """
+
+        data = {
+            "name": "bal",
+            "manager": self.product_A_manager.id,
+            "sale_price": 10000,
+            "price": 12000,
+            "stock": False,
+            "producttags": [{"tags":"aaaa"}]
+        }
+        res = self.client.post("/product/", data=data, content_type="application/json")
+        res = self.client.get("/product/?search=bal")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?search=12000")
+        self.assertEqual(len(res.json()), 1)
+
+        res = self.client.get("/product/?search=10000")
+        self.assertEqual(len(res.json()), 1)
