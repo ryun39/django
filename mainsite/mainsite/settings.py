@@ -24,8 +24,10 @@ SECRET_KEY = 'django-insecure-woy!v8n1(@h30*8q-uw!8in8rkbk53y1s0-h@tgqur72c%00ut
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1',]
 
 
 # Application definition
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'product',
 ]
 
@@ -125,7 +128,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.AllowAny', # 👈 지정해주지않으면, Default로 AllowAny가 적용되있다.
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
